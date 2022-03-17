@@ -7,6 +7,7 @@
 
     <main>
         <div class="top-row px-4">
+            <span>Current count: @AppState.CurrentCount</span>
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
         </div>
 
@@ -15,3 +16,7 @@
         </article>
     </main>
 </div>
+
+@code {
+    [CascadingParameter] private AppState AppState { get; set; }
+}
