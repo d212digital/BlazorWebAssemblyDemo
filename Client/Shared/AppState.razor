@@ -1,4 +1,6 @@
-﻿<CascadingValue Value=this>
+﻿@inject IJSInProcessRuntime JS
+
+<CascadingValue Value=this>
     @ChildContent
 </CascadingValue>
 
@@ -16,8 +18,18 @@
         set
         {
             _currentCount = value;
+
+            JS.InvokeVoid(JsInteropConstants.SetSessionStorage, nameof(CurrentCount), value);
+
             StateHasChanged();
         }
+    }
+
+    protected override void OnInitialized()
+    {
+        var value = JS.Invoke<string>(JsInteropConstants.GetSessionStorage, nameof(CurrentCount));
+
+        int.TryParse(value, out _currentCount);
     }
 
 }
